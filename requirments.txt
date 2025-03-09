@@ -1,0 +1,4 @@
+tensorflow
+fastApi
+pytorch
+huggingface
