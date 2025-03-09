@@ -36,7 +36,7 @@ try:
         trust_remote_code=True
     ).to(device)
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-    print("✅ Model Loaded Successfully")
+    print(" Model Loaded Successfully")
 except Exception as e:
     print(f"❌ Error loading model: {e}")
 

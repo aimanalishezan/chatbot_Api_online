@@ -13,7 +13,7 @@ function App() {
   const handleChat = async () => {
     if (!prompt.trim()) return;
 
-    const userMessage = { sender: "user", text: prompt, time: new Date().toLocaleTimeString() };
+    const userMessage = { sender: "user", text: prompt };
     setChatHistory((prev) => [...prev, userMessage]); // Add user's message to history
     setPrompt(""); // Reset input box
     setLoading(true); // Show loading state
@@ -21,13 +21,13 @@ function App() {
     try {
       // Send message to backend
       const response = await axios.post("http://localhost:8000/chat", { prompt });
-      const botMessage = { sender: "bot", text: response.data.response, time: new Date().toLocaleTimeString() };
+      const botMessage = { sender: "bot", text: response.data.response };
       setChatHistory((prev) => [...prev, botMessage]); // Add bot's response to history
     } catch (error) {
       console.error("Error:", error);
       setChatHistory((prev) => [
         ...prev,
-        { sender: "bot", text: "⚠️ Error: Could not connect to server.", time: new Date().toLocaleTimeString() },
+        { sender: "bot", text: "⚠️ Error: Could not connect to server." },
       ]);
     } finally {
       setLoading(false); // Hide loading state
@@ -41,44 +41,36 @@ function App() {
     }
   }, [chatHistory]);
 
-  // Handle Enter key to send the chat message
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) { // Prevent Enter key from adding a new line
-      e.preventDefault();
-      handleChat();
-    }
-  };
-
   // Toggle dark mode
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    setDarkMode((prevMode) => !prevMode);
   };
 
   return (
-    <div className={`app-container ${darkMode ? 'dark' : ''}`}>
-      <h1 className="app-title">AI Chatbot</h1>
-
-      {/* Dark Mode Toggle Button */}
-      <button className="dark-mode-toggle" onClick={toggleDarkMode}>
-        {darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-      </button>
+    <div className={`app-container ${darkMode ? "dark" : ""}`}>
+      {/* Navbar */}
+      <div className={`navbar ${darkMode ? "dark" : ""}`}>
+        <div className="navbar-title">AI_MAN</div>
+        <button className="dark-mode-toggle" onClick={toggleDarkMode}>
+          {darkMode ? "Light Mode" : "Dark Mode"}
+        </button>
+      </div>
 
       {/* Chat History Section */}
-      <div ref={chatContainerRef} className="chat-box">
+      <div ref={chatContainerRef} className={`chat-box ${darkMode ? "dark" : ""}`}>
         {chatHistory.length === 0 ? (
           <p className="placeholder">Start chatting with the AI...</p>
         ) : (
           chatHistory.map((msg, index) => (
             <div key={index} className={`message ${msg.sender}`}>
-              <div className="message-text">
-                {msg.sender === "user" ? "🙂" : "🤖"} {/* Add emoji */}
-                <span className="text">{msg.text}</span>
-              </div>
-              <div className="message-time">{msg.time}</div>
+              <span className="message-text">{msg.text}</span>
+              <span className="message-time">
+                {new Date().toLocaleTimeString()}
+              </span>
             </div>
           ))
         )}
-        {loading && <p className="loading">⏳ AI is thinking...</p>}
+        {loading && <p className="loading">⏳ Response Generating...</p>}
       </div>
 
       {/* Input Section */}
@@ -89,7 +81,12 @@ function App() {
           placeholder="Type your message..."
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          onKeyDown={handleKeyDown} // Listen for Enter key
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleChat();
+            }
+          }}
         ></textarea>
 
         <button className="send-button" onClick={handleChat} disabled={loading}>
