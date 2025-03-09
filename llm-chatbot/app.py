@@ -1,25 +1,41 @@
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from huggingface_hub import login
 
-# Use your Hugging Face token here
-login(token="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")
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
+# Use the environment variable for the Hugging Face token securely
+login(token=os.getenv("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"))
 
 app = FastAPI()
 
-# Load model with optimization
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Allow React frontend
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
+# Ensure that the device is set correctly (GPU/CPU)
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+# Load model with device allocation
 model_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
-model, tokenizer = None, None  # Initialize to None in case of error
+model = None
+tokenizer = None
 
 try:
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
-        torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32, 
+        torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
         device_map="auto",  # Distributes across CPU/GPU
         trust_remote_code=True
-    )
+    ).to(device)
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
     print("✅ Model Loaded Successfully")
 except Exception as e:
@@ -36,9 +52,8 @@ def chat(request: RequestData):
     # Tokenize the prompt
     inputs = tokenizer(request.prompt, return_tensors="pt")
 
-    # Move input tensors to GPU if available
-    if torch.cuda.is_available():
-        inputs = {k: v.to("cuda") for k, v in inputs.items()}
+    # Move input tensors to the correct device
+    inputs = {k: v.to(device) for k, v in inputs.items()}
 
     try:
         # Generate a response from the model
