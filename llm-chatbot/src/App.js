@@ -6,6 +6,7 @@ function App() {
   const [prompt, setPrompt] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [darkMode, setDarkMode] = useState(false); // Dark mode state
   const chatContainerRef = useRef(null);
 
   // Handle sending chat and updating history
@@ -48,9 +49,19 @@ function App() {
     }
   };
 
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <div className="app-container">
+    <div className={`app-container ${darkMode ? 'dark' : ''}`}>
       <h1 className="app-title">AI Chatbot</h1>
+
+      {/* Dark Mode Toggle Button */}
+      <button className="dark-mode-toggle" onClick={toggleDarkMode}>
+        {darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+      </button>
 
       {/* Chat History Section */}
       <div ref={chatContainerRef} className="chat-box">
