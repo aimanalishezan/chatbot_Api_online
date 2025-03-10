@@ -20,7 +20,8 @@ function App() {
 
     try {
       // Send message to backend
-      const response = await axios.post("http://0.0.0.0:7860", { prompt });
+      const response = await axios.post("https://huggingface.co/spaces/AI-man999/chat", { prompt });
+
       const botMessage = { sender: "bot", text: response.data.response };
       setChatHistory((prev) => [...prev, botMessage]); // Add bot's response to history
     } catch (error) {
