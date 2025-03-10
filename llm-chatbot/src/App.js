@@ -51,7 +51,7 @@ function App() {
     <div className={`app-container ${darkMode ? "dark" : ""}`}>
       {/* Navbar */}
       <div className={`navbar ${darkMode ? "dark" : ""}`}>
-        <div className="navbar-title">AI_MAN</div>
+        <div className="navbar-title">AI_MAN.Ai</div>
         <button className="dark-mode-toggle" onClick={toggleDarkMode}>
           {darkMode ? "Light Mode" : "Dark Mode"}
         </button>
