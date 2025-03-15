@@ -20,7 +20,7 @@ function App() {
 
     try {
       // Send message to backend
-      const response = await axios.post("https://AI-man999-Dynamic_bot.hf.space/chat", { prompt });
+      const response = await axios.post("https://AI-man999-FastAPiWithdocker.hf.space/chat", { prompt });
 
       const botMessage = { sender: "bot", text: response.data.response };
       setChatHistory((prev) => [...prev, botMessage]); // Add bot's response to history
