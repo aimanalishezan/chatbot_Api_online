@@ -105,7 +105,7 @@ body {
   flex-grow: 0;
   min-height: 50px;
   justify-content: flex-start;
-  word-wrap: break-word; /* Ensure tex wraps */
+  word-wrap: break-word; /* Ensure text wraps */
   white-space: normal; /* Allow long words to break and wrap */
   box-sizing: border-box;
   overflow-wrap: break-word; /* Prevent text from overflowing */
