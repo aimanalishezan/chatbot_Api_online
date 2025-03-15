@@ -1,4 +1,9 @@
-tensorflow
 fastApi
-pytorch
 huggingface
+uvicorn  
+psycopg2-binary
+sqlalchemy
+pymongo
+transformers
+torch
+pdfplumber
