@@ -7,3 +7,6 @@ pymongo
 transformers
 torch
 pdfplumber
+pymupdf
+pinecone
+sentence_transformers
