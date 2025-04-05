@@ -53,7 +53,8 @@ Check out the deployed version:
 ├── README.md
 
 
-Work FLow
+WorkFLow
+
 ![fullstack chatbot](https://github.com/user-attachments/assets/d0e52ede-c283-4aa3-bb39-bfcc60b78aa0)
 
 ```
