@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./App.css"; // Importing CSS for styles
-
 function App() {
   const [prompt, setPrompt] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
