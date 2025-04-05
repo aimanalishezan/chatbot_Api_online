@@ -36,7 +36,7 @@ Built with a powerful FastAPI backend and a sleek React frontend, this AI assist
 ## 🚀 Live Demo
 
 Check out the deployed version:  
-**[AI_MAN.Ai on Hugging Face Spaces](https://AI-man999-FastAPiWithdocker.hf.space)**
+**[AI_MAN.Ai on Hugging Face Spaces](your space link)**
 
 ---
 
