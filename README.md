@@ -1,4 +1,3 @@
-Here’s a well-structured and attractive `README.md` for your full-stack AI chatbot project. It covers both the backend (`app.py`) and frontend (`App.js`, `App.css`) components with clear setup instructions and features. You can further customize it if you want to add screenshots or a live demo link later.
 
 ---
 
